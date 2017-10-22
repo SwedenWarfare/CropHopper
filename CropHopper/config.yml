@@ -1,0 +1,6 @@
+hopper_name: "&bCrop &7Hopper"
+
+messages:
+    hopper_already_in_chunk: "&b&lAscendPvP &7> There is already a &bCrop &7Hopper in this chunk!"
+    hopper_break_success: "&b&lAscendPvP &7> You successfully broke a &bCrop &7Hopper!"
+    hopper_place_success: "&b&lAscendPvP &7> You successfully placed a &bCrop &7Hopper!"
