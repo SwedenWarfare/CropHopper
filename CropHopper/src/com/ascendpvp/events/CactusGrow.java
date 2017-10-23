@@ -1,7 +1,6 @@
 package com.ascendpvp.events;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Hopper;
@@ -30,22 +29,18 @@ public class CactusGrow implements Listener {
 		int spawnZ = e.getEntity().getLocation().getChunk().getZ();
 		String hopperSave = String.valueOf(spawnX + String.valueOf(spawnZ));
 		
-		if(plugin.getConfig().getString("hopperlocs." + hopperSave) != null) {
+		if(plugin.cfg.getString("hopperlocs." + hopperSave) != null) {
 			
 			e.setCancelled(true);
-			int hopperX = plugin.getConfig().getInt("hopperlocs." + hopperSave + "." + "x");
-			int hopperY = plugin.getConfig().getInt("hopperlocs." + hopperSave + "." + "y");
-			int hopperZ = plugin.getConfig().getInt("hopperlocs." + hopperSave + "." + "z");
-			String hopperWorld = plugin.getConfig().getString("hopperlocs." + hopperSave + "." + "world");
+			int hopperX = plugin.cfg.getInt("hopperlocs." + hopperSave + "." + "x");
+			int hopperY = plugin.cfg.getInt("hopperlocs." + hopperSave + "." + "y");
+			int hopperZ = plugin.cfg.getInt("hopperlocs." + hopperSave + "." + "z");
+			String hopperWorld = plugin.cfg.getString("hopperlocs." + hopperSave + "." + "world");
 			Location hopperLoc = new Location(Bukkit.getWorld(hopperWorld), hopperX, hopperY, hopperZ);
 			Hopper hopper = (Hopper) hopperLoc.getBlock().getState();
 			
 			hopper.getInventory().addItem(new ItemStack(Material.CACTUS));
 			
 		}
-	}
-
-	public String cc(String s) {
-		return ChatColor.translateAlternateColorCodes('&', s);
 	}
 }

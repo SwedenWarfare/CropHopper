@@ -22,7 +22,7 @@ public class ItemDrop implements Listener {
 		int spawnX = e.getItemDrop().getLocation().getChunk().getX();
 		int spawnZ = e.getItemDrop().getLocation().getChunk().getZ();
 		String hopperSave = String.valueOf(spawnX + String.valueOf(spawnZ));
-		if(plugin.getConfig().getString("hopperlocs." + hopperSave) == null) return;
+		if(plugin.cfg.getString("hopperlocs." + hopperSave) == null) return;
 		
 		e.getItemDrop().setCustomName("1337CaCtUs");
 	}

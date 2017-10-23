@@ -1,5 +1,7 @@
 package com.ascendpvp.events;
 
+import java.io.IOException;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -34,20 +36,23 @@ public class HopperPlace implements Listener {
 		int hopperX = e.getBlockPlaced().getX();
 		int hopperY = e.getBlockPlaced().getY();
 		int hopperZ = e.getBlockPlaced().getZ();
-	    
+
 		String hopperSave = String.valueOf(chunkX) + String.valueOf(chunkZ);
 
-		if(plugin.getConfig().getString("hopperlocs." + hopperSave) == null) {
+		if(plugin.cfg.getString("hopperlocs." + hopperSave) == null) {
 
 			p.sendMessage(cc(plugin.getConfig().getString("messages.hopper_place_success")));
-			plugin.getConfig().set("hopperlocs." + hopperSave + "." + "chunkx", chunkX);
-			plugin.getConfig().set("hopperlocs." + hopperSave + "." + "chunkz", chunkZ);
-			plugin.getConfig().set("hopperlocs." + hopperSave + "." + "x", hopperX);
-			plugin.getConfig().set("hopperlocs." + hopperSave + "." + "y", hopperY);
-			plugin.getConfig().set("hopperlocs." + hopperSave + "." + "z", hopperZ);
-			plugin.getConfig().set("hopperlocs." + hopperSave + "." + "world", e.getBlockPlaced().getWorld().getName());
-			plugin.saveConfig();
-
+			plugin.cfg.set("hopperlocs." + hopperSave + "." + "chunkx", chunkX);
+			plugin.cfg.set("hopperlocs." + hopperSave + "." + "chunkz", chunkZ);
+			plugin.cfg.set("hopperlocs." + hopperSave + "." + "x", hopperX);
+			plugin.cfg.set("hopperlocs." + hopperSave + "." + "y", hopperY);
+			plugin.cfg.set("hopperlocs." + hopperSave + "." + "z", hopperZ);
+			plugin.cfg.set("hopperlocs." + hopperSave + "." + "world", e.getBlockPlaced().getWorld().getName());
+			try {
+				plugin.cfg.save(plugin.f);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
 		} else {
 			e.setCancelled(true);
 			p.sendMessage(cc(plugin.getConfig().getString("messages.hopper_already_in_chunk")));

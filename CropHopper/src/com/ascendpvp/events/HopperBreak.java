@@ -1,5 +1,7 @@
 package com.ascendpvp.events;
 
+import java.io.IOException;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -35,11 +37,11 @@ public class HopperBreak implements Listener {
 		int hopperY = blockBroke.getY();
 		int hopperZ = blockBroke.getZ();
 		String hopperSave = String.valueOf(chunkX) + String.valueOf(chunkZ);
-		int configX = plugin.getConfig().getInt("hopperlocs." + hopperSave + "." + "x");
-		int configY = plugin.getConfig().getInt("hopperlocs." + hopperSave + "." + "y");
-		int configZ = plugin.getConfig().getInt("hopperlocs." + hopperSave + "." + "z");
+		int configX = plugin.cfg.getInt("hopperlocs." + hopperSave + "." + "x");
+		int configY = plugin.cfg.getInt("hopperlocs." + hopperSave + "." + "y");
+		int configZ = plugin.cfg.getInt("hopperlocs." + hopperSave + "." + "z");
 		
-		if(plugin.getConfig().getString("hopperlocs." + hopperSave) == null) return;
+		if(plugin.cfg.getString("hopperlocs." + hopperSave) == null) return;
 		if(configX == hopperX && configY == hopperY && configZ == hopperZ) {
 			
 			ItemStack buyTnt = new ItemStack(Material.HOPPER);
@@ -48,11 +50,15 @@ public class HopperBreak implements Listener {
 			buyTnt.setItemMeta(buyTntIm);
 			
 			e.setCancelled(true);
+			plugin.cfg.set("hopperlocs." + hopperSave, null);
+			try {
+				plugin.cfg.save(plugin.f);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
 			e.getBlock().setType(Material.AIR);
 			e.getBlock().getWorld().dropItem(blockBroke.getLocation(), buyTnt);
 			p.sendMessage(cc(plugin.getConfig().getString("messages.hopper_break_success")));
-			plugin.getConfig().set("hopperlocs." + hopperSave, null);
-			plugin.saveConfig();
 		}
 	}
 	public String cc(String s) {
